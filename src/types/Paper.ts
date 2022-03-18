@@ -6,8 +6,8 @@ export interface PaperVersionsList {
 }
 
 export interface PaperBuildsList {
-  project_id:   string;
+  project_id: string;
   project_name: string;
-  version:      string;
-  builds:       number[];
+  version: string;
+  builds: number[];
 }
