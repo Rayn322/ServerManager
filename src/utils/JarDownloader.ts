@@ -2,20 +2,28 @@ import { getClient } from '@tauri-apps/api/http';
 import { ServerType } from '../types/ServerType';
 import type { MojangVersionManifest, MojangVersionInfo } from '../types/Mojang';
 import type { PaperVersionsList, PaperBuildsList } from '../types/Paper';
+import type { FabricOptions, FabricVersionsList } from 'src/types/Fabric';
 
-export async function downloadJar(serverType: ServerType, version: string, outputDir: string) {
-  const url = await getDownloadURL(serverType, version);
+export async function downloadJar(
+  serverType: ServerType,
+  version: string,
+  outputDir: string,
+  options?: FabricOptions
+) {
+  const url = await getDownloadURL(serverType, version, options);
   console.log(url);
 }
 
-async function getDownloadURL(serverType: ServerType, serverVersion: string) {
+async function getDownloadURL(
+  serverType: ServerType,
+  serverVersion: string,
+  options?: FabricOptions
+) {
   const client = await getClient();
-  let serverJarURL: string;
 
   switch (serverType) {
     // https://gaming.stackexchange.com/questions/123194/is-there-a-way-to-get-the-latest-server-jar-through-a-url-that-doesnt-change
     case ServerType.VANILLA || ServerType.SNAPSHOT:
-      
       // gets list of versions from Mojang
       const mojangVersionManifest = await (
         await client.get<MojangVersionManifest>(
@@ -32,9 +40,7 @@ async function getDownloadURL(serverType: ServerType, serverVersion: string) {
       }
 
       // gets the list with version specific downloads
-      const mojangVersionInfo = await (
-        await client.get<MojangVersionInfo>(mojangVersionURL)
-      ).data;
+      const mojangVersionInfo = await (await client.get<MojangVersionInfo>(mojangVersionURL)).data;
 
       return mojangVersionInfo.downloads.server.url;
 
@@ -63,6 +69,19 @@ async function getDownloadURL(serverType: ServerType, serverVersion: string) {
       return `https://papermc.io/api/v2/projects/paper/versions/${paperVersion}/builds/${paperBuild}/downloads/paper-${paperVersion}-${paperBuild}.jar`;
 
     case ServerType.FABRIC:
+      if (options) {
+        return `https://meta.fabricmc.net/v2/versions/loader/${serverVersion}/${options.loaderVersion}/${options.installerVersion}/server/jar`;
+      } else {
+        const fabricVersionsList = await (
+          await client.get<FabricVersionsList>('https://meta.fabricmc.net/v2/versions')
+        ).data;
+
+        // get latest loader and installer version
+        const loaderVersion = fabricVersionsList.loader[0].version;
+        const installerVersion = fabricVersionsList.installer[0].version;
+
+        return `https://meta.fabricmc.net/v2/versions/loader/${serverVersion}/${loaderVersion}/${installerVersion}/server/jar`;
+      }
     case ServerType.FORGE:
     default:
   }

@@ -22,6 +22,7 @@
     "vite": "^2.8.0"
   },
   "dependencies": {
-    "@tauri-apps/api": "^1.0.0-rc.2"
+    "@tauri-apps/api": "^1.0.0-rc.2",
+    "properties-reader": "^2.2.0"
   }
 }
