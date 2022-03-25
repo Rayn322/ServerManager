@@ -1,8 +1,9 @@
 import { getClient } from '@tauri-apps/api/http';
-import { ServerType } from '../types/ServerType';
-import type { MojangVersionManifest, MojangVersionInfo } from '../types/Mojang';
-import type { PaperVersionsList, PaperBuildsList } from '../types/Paper';
+import type { MojangVersionManifest, MojangVersionInfo } from 'src/types/Mojang';
+import type { PaperVersionsList, PaperBuildsList } from 'src/types/Paper';
 import type { FabricOptions, FabricVersionsList } from 'src/types/Fabric';
+import type { ForgeVersionsList } from 'src/types/Forge';
+import { ServerType } from '../types/ServerType';
 
 export async function downloadJar(
   serverType: ServerType,
@@ -83,6 +84,19 @@ async function getDownloadURL(
         return `https://meta.fabricmc.net/v2/versions/loader/${serverVersion}/${loaderVersion}/${installerVersion}/server/jar`;
       }
     case ServerType.FORGE:
+      // https://github.com/hexparrot/mineos-node/blob/master/profiles.d/forge.js
+      // https://discourse.codeemo.com/t/list-of-forge-server-jars/744
+      const forgeVersionsList = await (
+        await client.get<ForgeVersionsList>(
+          'https://files.minecraftforge.net/net/minecraftforge/forge/promotions_slim.json'
+        )
+      ).data;
+
+      const forgeVersion = forgeVersionsList.promos[serverVersion];
+      const minecraftVersion = serverVersion.substring(0, serverVersion.indexOf('-'));
+      console.log(minecraftVersion);
+
+      return `https://files.minecraftforge.net/maven/net/minecraftforge/forge/${minecraftVersion}-${forgeVersion}/forge-${minecraftVersion}-${forgeVersion}-installer.jar`;
     default:
   }
 }

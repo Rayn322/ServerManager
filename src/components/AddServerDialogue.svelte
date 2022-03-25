@@ -16,6 +16,8 @@ import { downloadJar } from '../utils/JarDownloader';
         return ['1.18.2', '1.18.1', '1.18.0'];
       case ServerType.PAPER:
         return ['1.18.1'];
+      case ServerType.FORGE: 
+      return ['1.18.2-latest', '1.18.1-recommended', '1.18.1-latest'];
       default:
         return ['1.17.1'];
     }
