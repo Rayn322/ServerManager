@@ -1,5 +1,5 @@
 <script lang="ts">
-import { downloadJar } from '../utils/JarDownloader';
+  import { downloadJar } from '../utils/JarDownloader';
 
   import { ServerType } from '../types/ServerType';
 
@@ -16,8 +16,8 @@ import { downloadJar } from '../utils/JarDownloader';
         return ['1.18.2', '1.18.1', '1.18.0'];
       case ServerType.PAPER:
         return ['1.18.1'];
-      case ServerType.FORGE: 
-      return ['1.18.2-latest', '1.18.1-recommended', '1.18.1-latest'];
+      case ServerType.FORGE:
+        return ['1.18.2-latest', '1.18.1-recommended', '1.18.1-latest'];
       default:
         return ['1.17.1'];
     }
@@ -26,7 +26,7 @@ import { downloadJar } from '../utils/JarDownloader';
   function createServer() {
     closeDialogue();
     console.log(`Creating server ${name} of type ${serverType} and version ${serverVersion}`);
-    downloadJar(serverType, serverVersion, 'E:');
+    downloadJar(serverType, serverVersion, 'ServerManager/instances/1');
   }
 </script>
 

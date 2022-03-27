@@ -1,9 +1,10 @@
-import { getClient } from '@tauri-apps/api/http';
+import { getClient, ResponseType } from '@tauri-apps/api/http';
 import type { MojangVersionManifest, MojangVersionInfo } from 'src/types/Mojang';
 import type { PaperVersionsList, PaperBuildsList } from 'src/types/Paper';
 import type { FabricOptions, FabricVersionsList } from 'src/types/Fabric';
 import type { ForgeVersionsList } from 'src/types/Forge';
 import { ServerType } from '../types/ServerType';
+import { BaseDirectory, createDir, writeBinaryFile } from '@tauri-apps/api/fs';
 
 export async function downloadJar(
   serverType: ServerType,
@@ -13,6 +14,23 @@ export async function downloadJar(
 ) {
   const url = await getDownloadURL(serverType, version, options);
   console.log(url);
+
+  const client = await getClient();
+  console.log('got client');
+  const file = await (
+    await client.request<Iterable<number>>({
+      method: 'GET',
+      url: url,
+      responseType: ResponseType.Binary
+    })
+  ).data;
+  console.log('got file');
+  await createDir(outputDir, { dir: BaseDirectory.LocalData, recursive: true });
+  await writeBinaryFile(
+    { contents: file, path: `${outputDir}/server.jar` },
+    { dir: BaseDirectory.LocalData }
+  );
+  console.log('wrote file');
 }
 
 async function getDownloadURL(
