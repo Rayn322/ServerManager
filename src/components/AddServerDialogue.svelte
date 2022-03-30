@@ -1,6 +1,5 @@
 <script lang="ts">
   import { downloadJar } from '../utils/JarDownloader';
-
   import { ServerType } from '../types/ServerType';
 
   export let closeDialogue: () => void;
@@ -14,6 +13,8 @@
     switch (serverType) {
       case ServerType.VANILLA:
         return ['1.18.2', '1.18.1', '1.18.0'];
+      case ServerType.SNAPSHOT:
+        return ['22w12a'];
       case ServerType.PAPER:
         return ['1.18.1'];
       case ServerType.FORGE:
@@ -26,7 +27,7 @@
   function createServer() {
     closeDialogue();
     console.log(`Creating server ${name} of type ${serverType} and version ${serverVersion}`);
-    downloadJar(serverType, serverVersion, 'ServerManager/instances/1');
+    downloadJar(serverType, serverVersion, 'ServerManager/instances/1/server.jar');
   }
 </script>
 

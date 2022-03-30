@@ -24,7 +24,7 @@
       "resources": [],
       "externalBin": [],
       "copyright": "",
-      "category": "DeveloperTool",
+      "category": "Utility",
       "shortDescription": "",
       "longDescription": "",
       "deb": {
@@ -58,6 +58,9 @@
       "fs": {
         "all": true,
         "scope": ["$DESKTOP/**", "$LOCALDATA/**"]
+      },
+      "path": {
+        "all": true
       }
     },
     "windows": [

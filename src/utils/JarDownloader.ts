@@ -5,11 +5,12 @@ import type { FabricOptions, FabricVersionsList } from 'src/types/Fabric';
 import type { ForgeVersionsList } from 'src/types/Forge';
 import { ServerType } from '../types/ServerType';
 import { BaseDirectory, createDir, writeBinaryFile } from '@tauri-apps/api/fs';
+import { fs, path } from '@tauri-apps/api';
 
 export async function downloadJar(
   serverType: ServerType,
   version: string,
-  outputDir: string,
+  filePath: string,
   options?: FabricOptions
 ) {
   const url = await getDownloadURL(serverType, version, options);
@@ -18,19 +19,32 @@ export async function downloadJar(
   const client = await getClient();
   console.log('got client');
   const file = await (
-    await client.request<Iterable<number>>({
-      method: 'GET',
-      url: url,
+    await client.get<Iterable<number>>(url, {
       responseType: ResponseType.Binary
     })
   ).data;
+
   console.log('got file');
-  await createDir(outputDir, { dir: BaseDirectory.LocalData, recursive: true });
-  await writeBinaryFile(
-    { contents: file, path: `${outputDir}/server.jar` },
-    { dir: BaseDirectory.LocalData }
-  );
+  await createDir(await path.dirname(filePath), { dir: BaseDirectory.Desktop, recursive: true });
+  console.log('create dir');
+  await writeBinaryFile({ contents: file, path: filePath }, { dir: BaseDirectory.Desktop });
   console.log('wrote file');
+
+  // const { data, headers } = await axios.get(url, {
+  //   responseType: 'stream',
+  //   timeout: 1200000
+  // });
+
+  // const writeStream = createWriteStream(filePath);
+  // data.pipe(writeStream);
+
+  // data.on('data', (chunk) => {
+  //   console.log(chunk.length);
+  // });
+
+  // data.on('end', () => {
+  //   console.log('ended');
+  // });
 }
 
 async function getDownloadURL(
@@ -62,7 +76,6 @@ async function getDownloadURL(
       const mojangVersionInfo = await (await client.get<MojangVersionInfo>(mojangVersionURL)).data;
 
       return mojangVersionInfo.downloads.server.url;
-
     case ServerType.PAPER:
       // gets list of versions from Paper
       const paperVersionsList = await (
@@ -86,7 +99,6 @@ async function getDownloadURL(
       const paperBuild = paperBuildsList.builds[paperBuildsList.builds.length - 1];
 
       return `https://papermc.io/api/v2/projects/paper/versions/${paperVersion}/builds/${paperBuild}/downloads/paper-${paperVersion}-${paperBuild}.jar`;
-
     case ServerType.FABRIC:
       if (options) {
         return `https://meta.fabricmc.net/v2/versions/loader/${serverVersion}/${options.loaderVersion}/${options.installerVersion}/server/jar`;
@@ -115,6 +127,5 @@ async function getDownloadURL(
       console.log(minecraftVersion);
 
       return `https://files.minecraftforge.net/maven/net/minecraftforge/forge/${minecraftVersion}-${forgeVersion}/forge-${minecraftVersion}-${forgeVersion}-installer.jar`;
-    default:
   }
 }
