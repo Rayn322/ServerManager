@@ -27,7 +27,7 @@
   function createServer() {
     closeDialogue();
     console.log(`Creating server ${name} of type ${serverType} and version ${serverVersion}`);
-    downloadJar(serverType, serverVersion, 'ServerManager/instances/1/server.jar');
+    downloadJar(serverType, serverVersion, 'C:/Users/Ryan/Desktop/ServerManager/instances/1/server.jar');
   }
 </script>
 

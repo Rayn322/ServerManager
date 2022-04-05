@@ -1,12 +1,12 @@
-import { getClient, ResponseType } from '@tauri-apps/api/http';
+import { getClient } from '@tauri-apps/api/http';
 import type { MojangVersionManifest, MojangVersionInfo } from 'src/types/Mojang';
 import type { PaperVersionsList, PaperBuildsList } from 'src/types/Paper';
 import type { FabricOptions, FabricVersionsList } from 'src/types/Fabric';
 import type { ForgeVersionsList } from 'src/types/Forge';
 import { ServerType } from '../types/ServerType';
-import { BaseDirectory, createDir, writeBinaryFile } from '@tauri-apps/api/fs';
-import { fs, path } from '@tauri-apps/api';
-
+import { invoke } from '@tauri-apps/api/tauri';
+import { path } from '@tauri-apps/api';
+import { createDir } from '@tauri-apps/api/fs';
 export async function downloadJar(
   serverType: ServerType,
   version: string,
@@ -16,35 +16,9 @@ export async function downloadJar(
   const url = await getDownloadURL(serverType, version, options);
   console.log(url);
 
-  const client = await getClient();
-  console.log('got client');
-  const file = await (
-    await client.get<Iterable<number>>(url, {
-      responseType: ResponseType.Binary
-    })
-  ).data;
-
-  console.log('got file');
-  await createDir(await path.dirname(filePath), { dir: BaseDirectory.Desktop, recursive: true });
-  console.log('create dir');
-  await writeBinaryFile({ contents: file, path: filePath }, { dir: BaseDirectory.Desktop });
-  console.log('wrote file');
-
-  // const { data, headers } = await axios.get(url, {
-  //   responseType: 'stream',
-  //   timeout: 1200000
-  // });
-
-  // const writeStream = createWriteStream(filePath);
-  // data.pipe(writeStream);
-
-  // data.on('data', (chunk) => {
-  //   console.log(chunk.length);
-  // });
-
-  // data.on('end', () => {
-  //   console.log('ended');
-  // });
+  await createDir(await path.dirname(filePath), { recursive: true });
+  await invoke('download_file', { url, filePath });
+  console.log('downloaded file');
 }
 
 async function getDownloadURL(
