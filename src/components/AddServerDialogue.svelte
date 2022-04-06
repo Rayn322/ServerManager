@@ -1,37 +1,32 @@
 <script lang="ts">
-  import { downloadJar } from '../utils/JarDownloader';
+  import { downloadJar, getVersionList } from '../utils/Downloader';
   import { ServerType } from '../types/ServerType';
 
   export let closeDialogue: () => void;
 
   let name = '';
-  let serverType = ServerType.VANILLA;
-  // TODO: make sure server version changes if its not available in the new server type
-  let serverVersion = getVersions(serverType)[0];
+  let serverType = ServerType.FORGE;
+  let serverVersion = '';
+  let versionList = getVersions(serverType);
 
-  function getVersions(serverType: ServerType): string[] {
-    switch (serverType) {
-      case ServerType.VANILLA:
-        return ['1.18.2', '1.18.1', '1.18.0'];
-      case ServerType.SNAPSHOT:
-        return ['22w12a'];
-      case ServerType.PAPER:
-        return ['1.18.1'];
-      case ServerType.FORGE:
-        return ['1.18.2-latest', '1.18.1-recommended', '1.18.1-latest'];
-      default:
-        return ['1.17.1'];
-    }
+  async function getVersions(serverType: ServerType): Promise<string[]> {
+    const versionList = await getVersionList(serverType);
+    serverVersion = versionList[0];
+    return versionList;
   }
 
   function createServer() {
     if (name.length === 0) {
       return;
     }
-    
+
     closeDialogue();
     console.log(`Creating server ${name} of type ${serverType} and version ${serverVersion}`);
-    downloadJar(serverType, serverVersion, `C:/Users/Ryan/Desktop/ServerManager/instances/${name}/server.jar`);
+    downloadJar(
+      serverType,
+      serverVersion,
+      `C:/Users/Ryan/Desktop/ServerManager/instances/${name}/server.jar`
+    );
   }
 </script>
 
@@ -57,9 +52,11 @@
     <div class="input">
       <label for="version">Version</label>
       <select name="version" bind:value={serverVersion}>
-        {#each getVersions(serverType) as version}
-          <option value={version}>{version}</option>
-        {/each}
+        {#await versionList then list}
+          {#each list as version}
+            <option value={version}>{version}</option>
+          {/each}
+        {/await}
       </select>
     </div>
 

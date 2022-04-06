@@ -25,7 +25,7 @@ async function getDownloadURL(
   serverType: ServerType,
   serverVersion: string,
   options?: FabricOptions
-) {
+): Promise<string> {
   const client = await getClient();
 
   switch (serverType) {
@@ -101,5 +101,80 @@ async function getDownloadURL(
       console.log(minecraftVersion);
 
       return `https://files.minecraftforge.net/maven/net/minecraftforge/forge/${minecraftVersion}-${forgeVersion}/forge-${minecraftVersion}-${forgeVersion}-installer.jar`;
+  }
+}
+
+export async function getVersionList(serverType: ServerType): Promise<string[]> {
+  const client = await getClient();
+
+  switch (serverType) {
+    case ServerType.VANILLA:
+      let vanillaVersions: string[] = [];
+
+      const mojangVersionManifest = await (
+        await client.get<MojangVersionManifest>(
+          'https://launchermeta.mojang.com/mc/game/version_manifest.json'
+        )
+      ).data;
+
+      mojangVersionManifest.versions.forEach((version) => {
+        if (version.type === 'release') {
+          vanillaVersions.push(version.id);
+        }
+      });
+
+      return vanillaVersions;
+
+    case ServerType.SNAPSHOT:
+      let snapshotVersions: string[] = [];
+
+      const snapshotVersionManifest = await (
+        await client.get<MojangVersionManifest>(
+          'https://launchermeta.mojang.com/mc/game/version_manifest.json'
+        )
+      ).data;
+
+      for (const version of snapshotVersionManifest.versions) {
+        if (version.type !== 'release') {
+          snapshotVersions.push(version.id);
+        }
+        if (version.id === '1.2.5') {
+          break;
+        }
+      }
+
+      return snapshotVersions;
+
+    case ServerType.PAPER:
+      const paperVersionsList = await (
+        await client.get<PaperVersionsList>('https://papermc.io/api/v2/projects/paper')
+      ).data;
+
+      return paperVersionsList.versions.reverse();
+
+    case ServerType.FABRIC:
+      let fabricVersions: string[] = [];
+
+      const fabricVersionsList = await (
+        await client.get<FabricVersionsList>('https://meta.fabricmc.net/v2/versions')
+      ).data;
+
+      for (const version of fabricVersionsList.game) {
+        fabricVersions.push(version.version);
+      }
+
+      return fabricVersions;
+
+    case ServerType.FORGE:
+      const forgeVersionsList = await (
+        await client.get<ForgeVersionsList>(
+          'https://files.minecraftforge.net/net/minecraftforge/forge/promotions_slim.json'
+        )
+      ).data;
+
+      return Object.keys(forgeVersionsList.promos).reverse();
+
+    default:
+      return ['1.18.2', '1.18.1'];
   }
 }
