@@ -7,6 +7,7 @@ import { ServerType } from '../types/ServerType';
 import { invoke } from '@tauri-apps/api/tauri';
 import { path } from '@tauri-apps/api';
 import { createDir } from '@tauri-apps/api/fs';
+
 export async function downloadJar(
   serverType: ServerType,
   version: string,
@@ -14,11 +15,10 @@ export async function downloadJar(
   options?: FabricOptions
 ) {
   const url = await getDownloadURL(serverType, version, options);
-  console.log(url);
 
   await createDir(await path.dirname(filePath), { recursive: true });
   await invoke('download_file', { url, filePath });
-  console.log('downloaded file');
+  console.log('Downloaded file to ' + filePath);
 }
 
 async function getDownloadURL(

@@ -17,16 +17,14 @@ fn main() {
 
 #[tauri::command]
 async fn download_file(url: String, file_path: String) {
-    println!("Downloading thing from {} to {}", url, file_path);
-
-    let bytes = reqwest::get(url)
-        .await
-        .expect("Error while downloading")
+    let response = reqwest::get(url).await.expect("Error while downloading");
+    let bytes = response
         .bytes()
         .await
         .expect("Error while reading response");
+
     let mut content = Cursor::new(bytes);
     let mut out = File::create(&file_path).expect("failed to create file");
     io::copy(&mut content, &mut out).expect("failed to copy content");
-    println!("Downloaded file to {}", file_path);
+    println!("Successfully downloaded file to {}", file_path);
 }
