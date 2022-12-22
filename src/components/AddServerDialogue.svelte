@@ -5,7 +5,7 @@
   export let closeDialogue: () => void;
 
   let name = '';
-  let serverType = ServerType.FORGE;
+  let serverType = ServerType.VANILLA;
   let serverVersion = '';
   let versionList = getVersions(serverType);
 
@@ -33,10 +33,10 @@
 <div class="dialogue">
   <p>Create Server</p>
   <form on:submit|preventDefault={createServer}>
-    <div class="input">
+    <!-- <div class="input">
       <label for="name">Name</label>
       <input type="text" name="name" placeholder="My Minecraft Server" bind:value={name} />
-    </div>
+    </div> -->
 
     <div class="input">
       <label for="type">Type</label>
@@ -49,7 +49,7 @@
       </select>
     </div>
 
-    <div class="input">
+    <!-- <div class="input">
       <label for="version">Version</label>
       <select name="version" bind:value={serverVersion}>
         {#await versionList then list}
@@ -58,9 +58,9 @@
           {/each}
         {/await}
       </select>
-    </div>
+    </div> -->
 
-    <button>Create</button>
+    <button>Next</button>
   </form>
 </div>
 <div class="background" on:click={closeDialogue} />

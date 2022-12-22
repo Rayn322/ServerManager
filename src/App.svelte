@@ -1,5 +1,5 @@
 <script lang="ts">
-  import AddServerDialogue from './components/AddServerDialogue.svelte';
+  import NewServerDialogue from './components/NewServerDialogue.svelte';
 
   let isDialogueOpen = false;
   const toggleDialogue = () => {
@@ -11,7 +11,7 @@
   <h1>Server Manager</h1>
   <button class="createServer" on:click={toggleDialogue}>Create Server</button>
   {#if isDialogueOpen}
-    <AddServerDialogue closeDialogue={toggleDialogue} />
+    <NewServerDialogue closeDialogue={toggleDialogue} />
   {/if}
 </main>
 
@@ -19,7 +19,9 @@
   :global(:root) {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
       'Open Sans', 'Helvetica Neue', sans-serif;
-    background-color: #111d36;
+    --background-color: #111d36;
+    --font-color: #c5c5c5;
+    background-color: var(--background-color);
   }
 
   :global(*) {
@@ -33,7 +35,7 @@
   }
 
   h1 {
-    color: #c5c5c5;
+    color: var(--font-color);
     text-transform: uppercase;
     font-size: 3rem;
     font-weight: 350;
@@ -43,10 +45,10 @@
 
   .createServer {
     font-size: 2rem;
-    color: #c5c5c5;
+    color: var(--font-color);
     padding: 0.5em 1.5em;
     background-color: #000000;
-    border: 3px solid #c5c5c5;
+    border: 3px solid var(--font-color);
     border-radius: 1em;
   }
 

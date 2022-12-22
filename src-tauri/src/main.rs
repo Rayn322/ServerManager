@@ -16,7 +16,7 @@ fn main() {
 }
 
 #[tauri::command]
-async fn download_file(url: String, file_path: String) {
+async fn download_file(url: String, file_path: String) -> bool {
     let response = reqwest::get(url).await.expect("Error while downloading");
     let bytes = response
         .bytes()
@@ -27,4 +27,5 @@ async fn download_file(url: String, file_path: String) {
     let mut out = File::create(&file_path).expect("failed to create file");
     io::copy(&mut content, &mut out).expect("failed to copy content");
     println!("Successfully downloaded file to {}", file_path);
+    return true;
 }
