@@ -1,5 +1,17 @@
+<script lang="ts">
+	import AddServer from '$lib/AddServer.svelte';
+	let open = false;
+</script>
+
+<p>servers and stuff</p>
+
+{#if open}
+	<AddServer bind:open />
+{/if}
+
 <div class="fixed bottom-8 right-8">
 	<button
+		on:click={() => (open = true)}
 		class="flex h-16 w-16 items-center justify-center rounded-xl bg-blue-800 text-4xl hover:bg-blue-700"
 	>
 		<svg
