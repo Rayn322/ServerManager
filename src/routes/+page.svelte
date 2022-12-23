@@ -4,7 +4,7 @@
 	let open = false;
 </script>
 
-<div class="m-auto flex max-w-5xl flex-wrap justify-center gap-6 p-4">
+<div class="m-auto flex max-w-4xl flex-wrap justify-center gap-6 p-4">
 	{#each Array(10) as _, i}
 		<ServerCard />
 	{/each}
