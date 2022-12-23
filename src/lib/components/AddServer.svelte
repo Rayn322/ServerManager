@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { downloadJar } from '$lib/utils/download';
 	import { isFolderEmpty } from '$lib/utils/fs';
 	import { getVersionList } from '$lib/utils/versions';
 	import { open as openFolder } from '@tauri-apps/api/dialog';
@@ -37,6 +38,7 @@
 			error = 'Folder is not empty';
 		} else {
 			open = false;
+			downloadJar(version, folder);
 		}
 	};
 
