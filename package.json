@@ -12,11 +12,13 @@
     "tauri": "tauri"
   },
   "dependencies": {
-    "@tauri-apps/api": "^1.2.0"
+    "@tauri-apps/api": "^1.2.0",
+    "tauri-plugin-download-api": "github:FabianLars/tauri-plugin-download#main"
   },
   "devDependencies": {
     "@sveltejs/adapter-static": "^1.0.0",
     "@sveltejs/kit": "^1.0.1",
+    "@tailwindcss/forms": "^0.5.3",
     "@tauri-apps/cli": "^1.2.2",
     "autoprefixer": "^10.4.13",
     "eslint": "^8.30.0",
