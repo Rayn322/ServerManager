@@ -22,6 +22,9 @@ tauri-plugin-persisted-scope = "0.1"
 [dependencies.tauri-plugin-download]
 git = "https://github.com/FabianLars/tauri-plugin-download"
 
+[dependencies.tauri-plugin-store]
+git = "https://github.com/tauri-apps/tauri-plugin-store"
+
 [features]
 # by default Tauri runs in production mode
 # when `tauri dev` runs it is executed with `cargo run --no-default-features` if `devPath` is an URL

@@ -13,7 +13,8 @@
   },
   "dependencies": {
     "@tauri-apps/api": "^1.2.0",
-    "tauri-plugin-download-api": "github:FabianLars/tauri-plugin-download#main"
+    "tauri-plugin-download-api": "github:FabianLars/tauri-plugin-download#main",
+    "tauri-plugin-store-api": "github:tauri-apps/tauri-plugin-store"
   },
   "devDependencies": {
     "@sveltejs/adapter-static": "^1.0.0",

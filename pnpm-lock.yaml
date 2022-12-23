@@ -20,13 +20,15 @@ specifiers:
   svelte-preprocess: ^5.0.0
   tailwindcss: ^3.2.4
   tauri-plugin-download-api: github:FabianLars/tauri-plugin-download#main
+  tauri-plugin-store-api: github:tauri-apps/tauri-plugin-store
   tslib: ^2.4.1
   typescript: ^4.9.4
   vite: ^4.0.3
 
 dependencies:
   '@tauri-apps/api': 1.2.0
-  tauri-plugin-download-api: github.com/FabianLars/tauri-plugin-download/a5ae812f7e6f06e31055d89db302d9524b360bec
+  tauri-plugin-download-api: github.com/FabianLars/tauri-plugin-download/12cf1568e9c7b7d5480dbf57f45c4ef3e520b1fc
+  tauri-plugin-store-api: github.com/tauri-apps/tauri-plugin-store/9bd993aa67766596638bbfd91e79a1bf8f632014
 
 devDependencies:
   '@sveltejs/adapter-static': 1.0.0_@sveltejs+kit@1.0.1
@@ -391,6 +393,11 @@ packages:
       mini-svg-data-uri: 1.4.4
       tailwindcss: 3.2.4_postcss@8.4.20
     dev: true
+
+  /@tauri-apps/api/1.1.0:
+    resolution: {integrity: sha512-n13pIqdPd3KtaMmmAcrU7BTfdMtIlGNnfZD0dNX8L4p8dgmuNyikm6JAA+yCpl9gqq6I8x5cV2Y0muqdgD0cWw==}
+    engines: {node: '>= 12.22.0', npm: '>= 6.6.0', yarn: '>= 1.19.1'}
+    dev: false
 
   /@tauri-apps/api/1.2.0:
     resolution: {integrity: sha512-lsI54KI6HGf7VImuf/T9pnoejfgkNoXveP14pVV7XarrQ46rOejIVJLFqHI9sRReJMGdh2YuCoI3cc/yCWCsrw==}
@@ -1822,6 +1829,10 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
+  /tslib/2.4.0:
+    resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
+    dev: false
+
   /tslib/2.4.1:
     resolution: {integrity: sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA==}
 
@@ -1952,11 +1963,20 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  github.com/FabianLars/tauri-plugin-download/a5ae812f7e6f06e31055d89db302d9524b360bec:
-    resolution: {tarball: https://codeload.github.com/FabianLars/tauri-plugin-download/tar.gz/a5ae812f7e6f06e31055d89db302d9524b360bec}
+  github.com/FabianLars/tauri-plugin-download/12cf1568e9c7b7d5480dbf57f45c4ef3e520b1fc:
+    resolution: {tarball: https://codeload.github.com/FabianLars/tauri-plugin-download/tar.gz/12cf1568e9c7b7d5480dbf57f45c4ef3e520b1fc}
     name: tauri-plugin-download-api
     version: 0.0.0
     dependencies:
       '@tauri-apps/api': 1.2.0
       tslib: 2.4.1
+    dev: false
+
+  github.com/tauri-apps/tauri-plugin-store/9bd993aa67766596638bbfd91e79a1bf8f632014:
+    resolution: {tarball: https://codeload.github.com/tauri-apps/tauri-plugin-store/tar.gz/9bd993aa67766596638bbfd91e79a1bf8f632014}
+    name: tauri-plugin-store-api
+    version: 0.1.0
+    dependencies:
+      '@tauri-apps/api': 1.1.0
+      tslib: 2.4.0
     dev: false
