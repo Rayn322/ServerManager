@@ -20,6 +20,9 @@
 			"http": {
 				"request": true,
 				"scope": ["https://papermc.io/api/v2/**"]
+			},
+			"dialog": {
+				"open": true
 			}
 		},
 		"bundle": {
