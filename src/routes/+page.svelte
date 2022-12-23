@@ -1,9 +1,14 @@
 <script lang="ts">
 	import AddServer from '$lib/components/AddServer.svelte';
+	import ServerCard from '$lib/components/ServerCard.svelte';
 	let open = false;
 </script>
 
-<p>servers and stuff</p>
+<div class="m-auto flex max-w-5xl flex-wrap justify-center gap-6 p-4">
+	{#each Array(10) as _, i}
+		<ServerCard />
+	{/each}
+</div>
 
 {#if open}
 	<AddServer bind:open />
