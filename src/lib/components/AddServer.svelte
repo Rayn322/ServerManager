@@ -13,10 +13,8 @@
 
 <svelte:window on:keydown={(e) => onKeyDown(e)} />
 
-<!-- ignoring since we have the event on the window but this probably isn't the best -->
-<!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
-	on:click|self={() => (open = false)}
+	on:mousedown={() => (open = false)}
 	class="fixed top-0 left-0 z-10 flex h-full w-full items-center justify-center bg-black bg-opacity-40"
 >
 	<div class="flex w-1/2 flex-col items-center gap-4 rounded bg-neutral-600 p-6">
