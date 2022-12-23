@@ -68,7 +68,7 @@
 							<option>Loading...</option>
 						{:then versions}
 							{#each versions as version}
-								<option value={version}>{version}</option>
+								<option>{version}</option>
 							{/each}
 						{/await}
 					</select>
