@@ -5,7 +5,6 @@
 	let versions = getVersionList();
 
 	const onKeyDown = (e: KeyboardEvent) => {
-		console.log(e.key);
 		if (e.key === 'Escape') {
 			open = false;
 		}
@@ -27,7 +26,7 @@
 				<div>
 					<label for="type">Server type</label>
 					<select
-						class="mb-2 rounded border border-neutral-200 bg-neutral-800 py-1"
+						class="mb-2 rounded border-2 border-neutral-200 bg-neutral-800 py-1"
 						id="type"
 						title="Paper is the only supported option"
 						disabled
@@ -37,7 +36,7 @@
 				</div>
 				<div>
 					<label for="version">Server version</label>
-					<select class="mb-2 rounded border border-neutral-200 bg-neutral-800 py-1" id="version">
+					<select class="mb-2 rounded border-2 border-neutral-200 bg-neutral-800 py-1" id="version">
 						{#await versions}
 							<option value="1">Loading...</option>
 						{:then versions}
@@ -47,12 +46,19 @@
 						{/await}
 					</select>
 				</div>
-				<button
-					type="submit"
-					class="rounded border-neutral-300 bg-blue-700 p-2 ring-2 ring-blue-600 hover:bg-blue-600 hover:ring-blue-500"
-				>
-					Create
-				</button>
+				<div class="space-x-2">
+					<button
+						class="rounded border-neutral-300 bg-neutral-700 p-2 ring-2 ring-neutral-500 hover:bg-neutral-600 hover:ring-neutral-400"
+					>
+						Cancel
+					</button>
+					<button
+						type="submit"
+						class="rounded border-neutral-300 bg-blue-700 p-2 ring-2 ring-blue-600 hover:bg-blue-600 hover:ring-blue-500"
+					>
+						Create
+					</button>
+				</div>
 			</div>
 		</form>
 	</div>
