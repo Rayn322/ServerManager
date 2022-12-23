@@ -1,5 +1,5 @@
 <script lang="ts">
-	import AddServer from '$lib/AddServer.svelte';
+	import AddServer from '$lib/components/AddServer.svelte';
 	let open = false;
 </script>
 
