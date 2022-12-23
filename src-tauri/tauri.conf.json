@@ -23,6 +23,10 @@
 			},
 			"dialog": {
 				"open": true
+			},
+			"fs": {
+				"exists": true,
+				"readDir": true
 			}
 		},
 		"bundle": {
