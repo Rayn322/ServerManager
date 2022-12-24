@@ -2,6 +2,7 @@
 	import type { Server } from '$lib/types/server';
 
 	export let server: Server = {
+		id: 'asldkfjawge',
 		name: 'Sample Server',
 		path: 'D:\\MinecraftServers\\Empty',
 		paperBuild: 400,
