@@ -1,13 +1,29 @@
+import { goto } from '$app/navigation';
 import type { PaperBuildsList, PaperVersionsList } from '$lib/types/paper';
 import { getClient } from '@tauri-apps/api/http';
 import download from 'tauri-plugin-download-api';
+import { saveServer } from './data';
 
-export async function downloadJar(version: string, path: string) {
-	let downloaded = 0;
-	await download(await getDownloadUrl(version), `${path}/server.jar`, (progress, total) => {
-		downloaded += progress;
-		console.log(downloaded / total);
+export async function createServer(name: string, path: string, version: string) {
+	const paperBuild = await downloadJar(version, path, (progress, total) => {
+		console.log(progress / total);
 	});
+	const id = await saveServer(name, path, version, paperBuild);
+	goto(`/server/${id}`);
+}
+
+export async function downloadJar(
+	version: string,
+	path: string,
+	progressCallback: (progress: number, total: number) => void
+) {
+	let downloaded = 0;
+	const { url, paperBuild } = await getDownloadUrl(version);
+	await download(url, `${path}/paper-${version}-${paperBuild}.jar`, (progress, total) => {
+		downloaded += progress;
+		progressCallback(downloaded, total);
+	});
+	return paperBuild;
 }
 
 async function getDownloadUrl(version: string) {
@@ -30,5 +46,8 @@ async function getDownloadUrl(version: string) {
 	// gets the last item in order to get the most recent build
 	const latestBuild = buildsList.builds[buildsList.builds.length - 1];
 
-	return `https://papermc.io/api/v2/projects/paper/versions/${paperVersion}/builds/${latestBuild}/downloads/paper-${paperVersion}-${latestBuild}.jar`;
+	return {
+		url: `https://papermc.io/api/v2/projects/paper/versions/${paperVersion}/builds/${latestBuild}/downloads/paper-${paperVersion}-${latestBuild}.jar`,
+		paperBuild: latestBuild,
+	};
 }

@@ -28,6 +28,7 @@ export async function saveServer(name: string, path: string, version: string, pa
 		return data;
 	});
 	await saveData();
+	return id;
 }
 
 async function saveData() {
