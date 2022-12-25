@@ -4,8 +4,10 @@
 	import type { Server } from '$lib/types/server';
 	import { getServer } from '$lib/utils/manageServer';
 
+	type Tab = 'console' | 'settings' | 'details';
+
 	const id = $page.url.searchParams.get('id');
-	let tab: 'console' | 'settings' = 'console';
+	let tab: Tab = 'details';
 	let server: Server | undefined;
 	if (id) {
 		server = getServer(id);
@@ -15,12 +17,19 @@
 <div class="fixed top-0 left-0 mt-14 flex h-screen w-64 flex-col bg-neutral-900 py-4">
 	<button class="p-2 hover:bg-neutral-700" on:click={() => (tab = 'console')}>Console</button>
 	<button class="p-2 hover:bg-neutral-700" on:click={() => (tab = 'settings')}>Settings</button>
+	<button class="p-2 hover:bg-neutral-700" on:click={() => (tab = 'details')}>Details</button>
 </div>
 <div class="ml-64 p-4">
+	<h1 class="mb-2 text-2xl capitalize">{tab}</h1>
 	{#if tab === 'console'}
-		<h1>Console</h1>
+		<p>Console</p>
 	{:else if tab === 'settings'}
-		<h1>Settings</h1>
+		<p>Settings</p>
+	{:else if tab === 'details'}
+		<p>Name: {server?.name}</p>
+		<p>Version: {server?.version}</p>
+		<p>Paper Build: {server?.paperBuild}</p>
+		<p>File path: {server?.path}</p>
 	{:else}
 		<h1>Server</h1>
 	{/if}
