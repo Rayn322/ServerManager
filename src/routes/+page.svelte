@@ -1,5 +1,5 @@
 <script lang="ts">
-	import AddServer from '$lib/components/AddServer.svelte';
+	import NewServerModal from '$lib/components/NewServerModal.svelte';
 	import ServerCard from '$lib/components/ServerCard.svelte';
 	import { servers } from '$lib/stores/servers';
 	let open = false;
@@ -12,7 +12,7 @@
 </div>
 
 {#if open}
-	<AddServer bind:open />
+	<NewServerModal bind:open />
 {/if}
 
 <div class="fixed bottom-8 right-8">
