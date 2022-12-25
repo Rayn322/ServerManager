@@ -1,12 +1,13 @@
 <script lang="ts">
 	import AddServer from '$lib/components/AddServer.svelte';
 	import ServerCard from '$lib/components/ServerCard.svelte';
+	import { servers } from '$lib/stores/servers';
 	let open = false;
 </script>
 
 <div class="m-auto flex max-w-4xl flex-wrap justify-center gap-6 p-4">
-	{#each Array(10) as _, i}
-		<ServerCard />
+	{#each Object.values($servers) as server (server.id)}
+		<ServerCard {server} />
 	{/each}
 </div>
 
