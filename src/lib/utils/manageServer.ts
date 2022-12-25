@@ -18,10 +18,6 @@ export async function createServer(name: string, path: string, version: string) 
 	openServerPage(id);
 }
 
-export function getServer(id: string) {
-	return get(servers)[id];
-}
-
 export async function downloadJar(
 	version: string,
 	path: string,

@@ -1,17 +1,13 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import type { Server } from '$lib/types/server';
-	import { getServer } from '$lib/utils/manageServer';
+	import { servers } from '$lib/stores/servers';
 
 	type Tab = 'console' | 'settings' | 'details';
 
 	const id = $page.url.searchParams.get('id');
 	let tab: Tab = 'details';
-	let server: Server | undefined;
-	if (id) {
-		server = getServer(id);
-	}
+	$: server = id ? $servers[id] : null;
 </script>
 
 <div class="fixed top-0 left-0 mt-14 flex h-screen w-64 flex-col bg-neutral-900 py-4">
@@ -26,6 +22,7 @@
 	{:else if tab === 'settings'}
 		<p>Settings</p>
 	{:else if tab === 'details'}
+		<p>ID: {id}</p>
 		<p>Name: {server?.name}</p>
 		<p>Version: {server?.version}</p>
 		<p>Paper Build: {server?.paperBuild}</p>
