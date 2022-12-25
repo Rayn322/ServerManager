@@ -12,7 +12,6 @@ export async function loadData() {
 		// saves empty object
 		saveData();
 	}
-	saveServer('Test Server', 'C:\\Users\\User\\Desktop\\Test Server', '1.16.5', 777);
 }
 
 export async function saveServer(name: string, path: string, version: string, paperBuild: number) {
