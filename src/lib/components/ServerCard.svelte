@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Server } from '$lib/types/server';
-	import { openServerPage } from '$lib/utils/createServer';
+	import { openServerPage } from '$lib/utils/manageServer';
 
 	export let server: Server;
 </script>

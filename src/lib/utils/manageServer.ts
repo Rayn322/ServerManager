@@ -1,6 +1,8 @@
 import { goto } from '$app/navigation';
+import { servers } from '$lib/stores/servers';
 import type { PaperBuildsList, PaperVersionsList } from '$lib/types/paper';
 import { getClient } from '@tauri-apps/api/http';
+import { get } from 'svelte/store';
 import download from 'tauri-plugin-download-api';
 import { saveServer } from './data';
 
@@ -14,6 +16,10 @@ export async function createServer(name: string, path: string, version: string) 
 	});
 	const id = await saveServer(name, path, version, paperBuild);
 	openServerPage(id);
+}
+
+export function getServer(id: string) {
+	return get(servers)[id];
 }
 
 export async function downloadJar(
