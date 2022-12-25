@@ -12,7 +12,7 @@
 	}
 </script>
 
-<div class="fixed top-0 left-0 -z-10 mt-14 flex h-screen w-64 flex-col bg-neutral-900 py-4">
+<div class="fixed top-0 left-0 mt-14 flex h-screen w-64 flex-col bg-neutral-900 py-4">
 	<button class="p-2 hover:bg-neutral-700" on:click={() => (tab = 'console')}>Console</button>
 	<button class="p-2 hover:bg-neutral-700" on:click={() => (tab = 'settings')}>Settings</button>
 </div>
