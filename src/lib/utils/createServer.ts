@@ -4,12 +4,16 @@ import { getClient } from '@tauri-apps/api/http';
 import download from 'tauri-plugin-download-api';
 import { saveServer } from './data';
 
+export async function openServerPage(id: string) {
+	goto(`/server?id=${id}`);
+}
+
 export async function createServer(name: string, path: string, version: string) {
 	const paperBuild = await downloadJar(version, path, (progress, total) => {
 		console.log(progress / total);
 	});
 	const id = await saveServer(name, path, version, paperBuild);
-	goto(`/server/${id}`);
+	openServerPage(id);
 }
 
 export async function downloadJar(
