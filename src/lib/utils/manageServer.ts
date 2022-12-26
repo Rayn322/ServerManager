@@ -1,8 +1,6 @@
 import { goto } from '$app/navigation';
-import { servers } from '$lib/stores/servers';
 import type { PaperBuildsList, PaperVersionsList } from '$lib/types/paper';
 import { getClient } from '@tauri-apps/api/http';
-import { get } from 'svelte/store';
 import download from 'tauri-plugin-download-api';
 import { saveServer } from './data';
 
