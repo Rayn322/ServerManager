@@ -6,7 +6,7 @@
 	type Tab = 'console' | 'settings' | 'details';
 
 	const id = $page.url.searchParams.get('id');
-	let tab: Tab = 'details';
+	let tab: Tab = 'console';
 	$: server = id ? $servers[id] : null;
 </script>
 
@@ -19,7 +19,8 @@
 <div class="ml-64 p-4">
 	<h1 class="mb-2 text-2xl capitalize">{tab}</h1>
 	{#if tab === 'console'}
-		<p>Console</p>
+		<button class="rounded-md bg-emerald-600 p-2">Start</button>
+		<button class="rounded-md bg-rose-600 p-2">Stop</button>
 	{:else if tab === 'settings'}
 		<p>Settings</p>
 	{:else if tab === 'details'}
