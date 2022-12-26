@@ -26,7 +26,9 @@
 			},
 			"fs": {
 				"exists": true,
-				"readDir": true
+				"readDir": true,
+				"readFile": true,
+				"writeFile": true
 			}
 		},
 		"bundle": {
