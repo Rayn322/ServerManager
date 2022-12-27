@@ -19,7 +19,7 @@
 <div class="ml-64 p-4">
 	<h1 class="mb-2 text-2xl capitalize">{tab}</h1>
 	{#if tab === 'console'}
-		{#if $states[id].running}
+		{#if $states[id]?.running}
 			<button class="rounded-md bg-rose-600 p-2">Stop</button>
 		{:else}
 			<button class="rounded-md bg-emerald-600 p-2">Start</button>
