@@ -1,11 +1,55 @@
 import { goto } from '$app/navigation';
+import { servers, states } from '$lib/stores/servers';
 import type { PaperBuildsList, PaperVersionsList } from '$lib/types/paper';
-import { getClient } from '@tauri-apps/api/http';
-import download from 'tauri-plugin-download-api';
 import { saveServer } from '$lib/utils/data';
+import { getClient } from '@tauri-apps/api/http';
+import { Command } from '@tauri-apps/api/shell';
+import { get } from 'svelte/store';
+import download from 'tauri-plugin-download-api';
 
 export async function openServerPage(id: string) {
 	goto(`/server?id=${id}`);
+}
+
+export async function startServer(id: string) {
+	console.log('starting server');
+	const server = get(servers)[id];
+
+	const command = new Command(
+		'java',
+		['-jar', `paper-${server.version}-${server.paperBuild}.jar`, 'nogui'],
+		{
+			cwd: server.path,
+		}
+	);
+
+	command.on('close', (data) => {
+		console.log(`command finished with code ${data.code} and signal ${data.signal}`);
+		states.update((states) => {
+			states[id].running = false;
+			states[id].child = undefined;
+			return states;
+		});
+	});
+	command.on('error', (error) => console.error(`command error: "${error}"`));
+	command.stdout.on('data', (line) => console.log(`command stdout: "${line}"`));
+	command.stderr.on('data', (line) => console.log(`command stderr: "${line}"`));
+
+	const child = await command.spawn();
+	console.log('spawned');
+
+	states.update((states) => {
+		states[id].running = true;
+		states[id].child = child;
+		return states;
+	});
+}
+
+export async function stopServer(id: string) {
+	const state = get(states)[id];
+	if (state.running) {
+		state.child?.write('stop\n');
+	}
 }
 
 export async function createServer(name: string, path: string, version: string) {

@@ -1,3 +1,5 @@
+import type { Child } from '@tauri-apps/api/shell';
+
 export type Server = {
 	id: string;
 	name: string;
@@ -12,6 +14,7 @@ export type Servers = {
 
 export type State = {
 	running: boolean;
+	child?: Child;
 };
 
 export type ServerStates = {

@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { servers, states } from '$lib/stores/servers';
+	import { startServer, stopServer } from '$lib/utils/manageServer';
 
 	type Tab = 'console' | 'settings' | 'details';
 
@@ -20,9 +21,9 @@
 	<h1 class="mb-2 text-2xl capitalize">{tab}</h1>
 	{#if tab === 'console'}
 		{#if $states[id]?.running}
-			<button class="rounded-md bg-rose-600 p-2">Stop</button>
+			<button class="rounded-md bg-rose-600 p-2" on:click={() => stopServer(id)}>Stop</button>
 		{:else}
-			<button class="rounded-md bg-emerald-600 p-2">Start</button>
+			<button class="rounded-md bg-emerald-600 p-2" on:click={() => startServer(id)}>Start</button>
 		{/if}
 	{:else if tab === 'settings'}
 		<p>Settings</p>

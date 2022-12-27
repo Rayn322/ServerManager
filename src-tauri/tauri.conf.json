@@ -14,8 +14,16 @@
 		"allowlist": {
 			"all": false,
 			"shell": {
+				"scope": [
+					{
+						"name": "java",
+						"cmd": "java",
+						"args": true
+					}
+				],
 				"all": false,
-				"open": true
+				"open": true,
+				"execute": true
 			},
 			"http": {
 				"request": true,
