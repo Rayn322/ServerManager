@@ -2,7 +2,7 @@ import { goto } from '$app/navigation';
 import type { PaperBuildsList, PaperVersionsList } from '$lib/types/paper';
 import { getClient } from '@tauri-apps/api/http';
 import download from 'tauri-plugin-download-api';
-import { saveServer } from './data';
+import { saveServer } from '$lib/utils/data';
 
 export async function openServerPage(id: string) {
 	goto(`/server?id=${id}`);
