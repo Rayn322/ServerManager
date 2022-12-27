@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { servers } from '$lib/stores/servers';
+	import { servers, states } from '$lib/stores/servers';
 
 	type Tab = 'console' | 'settings' | 'details';
 
-	const id = $page.url.searchParams.get('id');
+	const id = $page.url.searchParams.get('id') as string;
 	let tab: Tab = 'console';
 	$: server = id ? $servers[id] : null;
 </script>
@@ -19,8 +19,11 @@
 <div class="ml-64 p-4">
 	<h1 class="mb-2 text-2xl capitalize">{tab}</h1>
 	{#if tab === 'console'}
-		<button class="rounded-md bg-emerald-600 p-2">Start</button>
-		<button class="rounded-md bg-rose-600 p-2">Stop</button>
+		{#if $states[id].running}
+			<button class="rounded-md bg-rose-600 p-2">Stop</button>
+		{:else}
+			<button class="rounded-md bg-emerald-600 p-2">Start</button>
+		{/if}
 	{:else if tab === 'settings'}
 		<p>Settings</p>
 	{:else if tab === 'details'}

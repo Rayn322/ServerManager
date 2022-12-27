@@ -6,6 +6,14 @@ export type Server = {
 	paperBuild: number;
 };
 
-export type ServersObject = {
+export type Servers = {
 	[key: string]: Server;
+};
+
+export type State = {
+	running: boolean;
+};
+
+export type ServerStates = {
+	[key: string]: State;
 };
