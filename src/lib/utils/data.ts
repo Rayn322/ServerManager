@@ -5,6 +5,7 @@ import { Store } from 'tauri-plugin-store-api';
 
 const initialState: State = {
 	running: false,
+	child: undefined,
 };
 
 export async function loadData() {
@@ -37,6 +38,11 @@ export async function saveServer(name: string, path: string, version: string, pa
 		};
 		return data;
 	});
+	states.update((data) => {
+		data[id] = initialState;
+		return data;
+	});
+
 	await saveData();
 	return id;
 }

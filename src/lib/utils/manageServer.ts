@@ -43,15 +43,8 @@ export async function startServer(id: string) {
 	console.log('spawned');
 
 	states.update((states) => {
-		if (states[id]) {
-			states[id].running = true;
-			states[id].child = child;
-		} else {
-			states[id] = {
-				running: true,
-				child,
-			};
-		}
+		states[id].running = true;
+		states[id].child = child;
 
 		return states;
 	});
