@@ -17,7 +17,7 @@ export async function startServer(id: string) {
 	const server = get(servers)[id];
 
 	// TODO: add message about accepting eula
-	if (await eulaIsAccepted(server)) {
+	if (!(await eulaIsAccepted(server))) {
 		await acceptEula(server);
 	}
 
