@@ -24,9 +24,7 @@ export async function startServer(id: string) {
 	const command = new Command(
 		'java',
 		['-jar', `paper-${server.version}-${server.paperBuild}.jar`, 'nogui'],
-		{
-			cwd: server.path,
-		}
+		{ cwd: server.path }
 	);
 
 	command.on('close', (data) => {
