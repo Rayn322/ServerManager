@@ -3,11 +3,6 @@ import type { Servers, State } from '$lib/types/server';
 import { get } from 'svelte/store';
 import { Store } from 'tauri-plugin-store-api';
 
-const initialState: State = {
-	running: false,
-	child: undefined,
-};
-
 export async function loadData() {
 	const store = new Store('servers.json');
 	let data = await store.get<Servers>('servers');
@@ -20,7 +15,12 @@ export async function loadData() {
 
 	for (const key of Object.keys(get(servers))) {
 		states.update((data) => {
-			data[key] = initialState;
+			// prevent all servers getting a reference to the same state object
+			data[key] = {
+				running: false,
+				child: undefined,
+				output: [],
+			};
 			return data;
 		});
 	}
@@ -39,7 +39,11 @@ export async function saveServer(name: string, path: string, version: string, pa
 		return data;
 	});
 	states.update((data) => {
-		data[id] = initialState;
+		data[id] = {
+			running: false,
+			child: undefined,
+			output: [],
+		};
 		return data;
 	});
 

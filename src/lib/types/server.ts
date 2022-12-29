@@ -15,6 +15,7 @@ export type Servers = {
 export type State = {
 	running: boolean;
 	child?: Child;
+	output: string[];
 };
 
 export type ServerStates = {

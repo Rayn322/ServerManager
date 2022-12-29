@@ -13,7 +13,7 @@ export async function openServerPage(id: string) {
 }
 
 export async function startServer(id: string) {
-	console.log('starting server');
+	console.log('starting server', id);
 	const server = get(servers)[id];
 
 	// TODO: add message about accepting eula
@@ -36,7 +36,12 @@ export async function startServer(id: string) {
 		});
 	});
 	command.on('error', (error) => console.error(`command error: "${error}"`));
-	command.stdout.on('data', (line) => console.log(`command stdout: "${line}"`));
+	command.stdout.on('data', (line) => {
+		states.update((states) => {
+			states[id].output.push(line);
+			return states;
+		});
+	});
 	command.stderr.on('data', (line) => console.log(`command stderr: "${line}"`));
 
 	const child = await command.spawn();
