@@ -6,6 +6,7 @@ import { getClient } from '@tauri-apps/api/http';
 import { Command } from '@tauri-apps/api/shell';
 import { get } from 'svelte/store';
 import download from 'tauri-plugin-download-api';
+import { acceptEula, eulaIsAccepted } from './fs';
 
 export async function openServerPage(id: string) {
 	goto(`/server?id=${id}`);
@@ -14,6 +15,11 @@ export async function openServerPage(id: string) {
 export async function startServer(id: string) {
 	console.log('starting server');
 	const server = get(servers)[id];
+
+	// TODO: add message about accepting eula
+	if (await eulaIsAccepted(server)) {
+		await acceptEula(server);
+	}
 
 	const command = new Command(
 		'java',
@@ -39,8 +45,16 @@ export async function startServer(id: string) {
 	console.log('spawned');
 
 	states.update((states) => {
-		states[id].running = true;
-		states[id].child = child;
+		if (states[id]) {
+			states[id].running = true;
+			states[id].child = child;
+		} else {
+			states[id] = {
+				running: true,
+				child,
+			};
+		}
+
 		return states;
 	});
 }
