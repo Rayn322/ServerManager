@@ -3,6 +3,7 @@
 	import { page } from '$app/stores';
 	import Console from '$lib/components/Console.svelte';
 	import { servers, states } from '$lib/stores/servers';
+	import { deleteServer } from '$lib/utils/data';
 	import { startServer, stopServer } from '$lib/utils/manageServer';
 
 	type Tab = 'console' | 'settings' | 'details';
@@ -11,6 +12,13 @@
 	let tab: Tab = 'console';
 	$: server = id ? $servers[id] : null;
 	$: state = id ? $states[id] : null;
+
+	async function deleteThis() {
+		if (server) {
+			await deleteServer(server);
+			goto('/');
+		}
+	}
 </script>
 
 <div class="fixed top-0 left-0 mt-14 flex h-screen w-64 flex-col bg-neutral-900 py-4">
@@ -30,6 +38,7 @@
 		<Console output={state?.output} />
 	{:else if tab === 'settings'}
 		<p>Settings</p>
+		<button class="rounded-md bg-rose-600 p-2" on:click={deleteThis}>Delete Server</button>
 	{:else if tab === 'details'}
 		<p>ID: {id}</p>
 		<p>Name: {server?.name}</p>

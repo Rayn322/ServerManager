@@ -35,6 +35,7 @@
 				"exists": true,
 				"readDir": true,
 				"readFile": true,
+				"removeDir": true,
 				"writeFile": true
 			}
 		},

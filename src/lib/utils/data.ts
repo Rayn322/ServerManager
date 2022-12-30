@@ -1,7 +1,9 @@
 import { servers, states } from '$lib/stores/servers';
-import type { Servers, State } from '$lib/types/server';
+import type { Server, Servers } from '$lib/types/server';
+import { removeDir } from '@tauri-apps/api/fs';
 import { get } from 'svelte/store';
 import { Store } from 'tauri-plugin-store-api';
+import { stopServer } from './manageServer';
 
 export async function loadData() {
 	const store = new Store('servers.json');
@@ -24,6 +26,12 @@ export async function loadData() {
 			return data;
 		});
 	}
+}
+
+async function saveData() {
+	const store = new Store('servers.json');
+	await store.set('servers', get(servers));
+	store.save();
 }
 
 export async function saveServer(name: string, path: string, version: string, paperBuild: number) {
@@ -51,8 +59,18 @@ export async function saveServer(name: string, path: string, version: string, pa
 	return id;
 }
 
-async function saveData() {
-	const store = new Store('servers.json');
-	await store.set('servers', get(servers));
-	store.save();
+export async function deleteServer(server: Server) {
+	await stopServer(server.id);
+	await removeDir(server.path, { recursive: true });
+
+	servers.update((data) => {
+		delete data[server.id];
+		return data;
+	});
+	states.update((data) => {
+		delete data[server.id];
+		return data;
+	});
+
+	await saveData();
 }
