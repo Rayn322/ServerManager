@@ -35,7 +35,7 @@
 		{:else}
 			<button class="rounded-md bg-emerald-600 p-2" on:click={() => startServer(id)}>Start</button>
 		{/if}
-		<Console output={state?.output} />
+		<Console output={state?.output} child={state?.child} />
 	{:else if tab === 'settings'}
 		<p>Settings</p>
 		<button class="rounded-md bg-rose-600 p-2" on:click={deleteThis}>Delete Server</button>
