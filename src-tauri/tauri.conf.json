@@ -1,79 +1,91 @@
 {
-  "package": {
-    "productName": "server-manager",
-    "version": "0.1.0"
-  },
-  "build": {
-    "distDir": "../dist",
-    "devPath": "http://localhost:3000",
-    "beforeDevCommand": "npm run dev",
-    "beforeBuildCommand": "npm run build"
-  },
-  "tauri": {
-    "bundle": {
-      "active": true,
-      "targets": "all",
-      "identifier": "com.tauri.dev",
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ],
-      "resources": [],
-      "externalBin": [],
-      "copyright": "",
-      "category": "Utility",
-      "shortDescription": "",
-      "longDescription": "",
-      "deb": {
-        "depends": []
-      },
-      "macOS": {
-        "frameworks": [],
-        "minimumSystemVersion": "",
-        "exceptionDomain": "",
-        "signingIdentity": null,
-        "providerShortName": null,
-        "entitlements": null
-      },
-      "windows": {
-        "certificateThumbprint": null,
-        "digestAlgorithm": "sha256",
-        "timestampUrl": ""
-      }
-    },
-    "updater": {
-      "active": false
-    },
-    "allowlist": {
-      "http": {
-        "all": true,
-        "request": true,
-        "scope": ["https://**"]
-      },
-      "fs": {
-        "all": true,
-        "scope": ["$DESKTOP/**", "$LOCALDATA/**"]
-      },
-      "path": {
-        "all": true
-      }
-    },
-    "windows": [
-      {
-        "title": "Server Manager",
-        "width": 800,
-        "height": 600,
-        "resizable": true,
-        "fullscreen": false,
-        "minWidth": 500,
-        "minHeight": 300
-      }
-    ],
-    "security": {
-      "csp": null
-    }
-  }
+	"build": {
+		"beforeDevCommand": "pnpm dev",
+		"beforeBuildCommand": "pnpm build",
+		"devPath": "http://localhost:1420",
+		"distDir": "../build",
+		"withGlobalTauri": false
+	},
+	"package": {
+		"productName": "server-manager",
+		"version": "0.0.0"
+	},
+	"tauri": {
+		"allowlist": {
+			"all": false,
+			"shell": {
+				"scope": [
+					{
+						"name": "java",
+						"cmd": "java",
+						"args": true
+					}
+				],
+				"open": true,
+				"execute": true
+			},
+			"http": {
+				"request": true,
+				"scope": ["https://papermc.io/api/v2/**"]
+			},
+			"dialog": {
+				"open": true
+			},
+			"fs": {
+				"exists": true,
+				"readDir": true,
+				"readFile": true,
+				"removeDir": true,
+				"writeFile": true
+			}
+		},
+		"bundle": {
+			"active": true,
+			"category": "DeveloperTool",
+			"copyright": "",
+			"deb": {
+				"depends": []
+			},
+			"externalBin": [],
+			"icon": [
+				"icons/32x32.png",
+				"icons/128x128.png",
+				"icons/128x128@2x.png",
+				"icons/icon.icns",
+				"icons/icon.ico"
+			],
+			"identifier": "me.ryanlauderbach.servermanager",
+			"longDescription": "",
+			"macOS": {
+				"entitlements": null,
+				"exceptionDomain": "",
+				"frameworks": [],
+				"providerShortName": null,
+				"signingIdentity": null
+			},
+			"resources": [],
+			"shortDescription": "",
+			"targets": "all",
+			"windows": {
+				"certificateThumbprint": null,
+				"digestAlgorithm": "sha256",
+				"timestampUrl": ""
+			}
+		},
+		"security": {
+			"csp": null
+		},
+		"updater": {
+			"active": false
+		},
+		"windows": [
+			{
+				"fullscreen": false,
+				"height": 600,
+				"resizable": true,
+				"title": "server-manager",
+				"width": 800
+			}
+		]
+	}
 }
