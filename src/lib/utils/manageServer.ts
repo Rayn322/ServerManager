@@ -5,7 +5,7 @@ import { saveServer } from '$lib/utils/data';
 import { getClient } from '@tauri-apps/api/http';
 import { Command } from '@tauri-apps/api/shell';
 import { get } from 'svelte/store';
-import download from 'tauri-plugin-download-api';
+import { download } from 'tauri-plugin-upload-api';
 import { acceptEula, eulaIsAccepted } from './fs';
 
 export async function openServerPage(id: string) {
