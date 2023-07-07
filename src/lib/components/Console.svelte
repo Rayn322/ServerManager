@@ -33,8 +33,8 @@
 
 <div
 	bind:this={consoleDiv}
-	class="scrollbar mt-4 h-[65vh] overflow-y-auto break-words border border-b-0 
-	border-neutral-500 bg-neutral-900 px-4 py-2  font-mono"
+	class="scrollbar mt-4 h-[65vh] overflow-y-auto break-words border border-b-0
+	border-neutral-500 bg-neutral-900 px-4 py-2 font-mono"
 >
 	{#each output as line}
 		<p>{line}</p>
