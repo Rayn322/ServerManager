@@ -1,5 +1,6 @@
 import type { Server } from '$lib/types/server';
 import { exists, readDir, readTextFile, writeTextFile } from '@tauri-apps/api/fs';
+import { join } from '@tauri-apps/api/path';
 import { parse, stringify } from 'ini';
 
 export async function isFolderEmpty(folder: string) {
@@ -13,11 +14,12 @@ export async function readPropertiesFile(path: string) {
 }
 
 export async function acceptEula(server: Server) {
-	await writeTextFile(`${server.path}\\eula.txt`, stringify({ eula: true }));
+	await writeTextFile(await join(server.path, 'eula.txt'), stringify({ eula: true }));
 }
 
 export async function eulaIsAccepted(server: Server) {
-	const eulaPath = `${server.path}\\eula.txt`;
+	const eulaPath = await join(server.path, 'eula.txt');
+
 	if (await exists(eulaPath)) {
 		let file = await readPropertiesFile(eulaPath);
 		return file.eula;
