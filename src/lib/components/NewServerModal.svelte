@@ -53,7 +53,8 @@
 
 <div
 	on:mousedown|self={() => (open = false)}
-	class="fixed top-0 left-0 z-10 flex h-full w-full items-center justify-center bg-black bg-opacity-40"
+	role="presentation"
+	class="fixed left-0 top-0 z-10 flex h-full w-full items-center justify-center bg-black bg-opacity-40"
 >
 	<div class="flex w-1/2 flex-col items-center gap-4 rounded bg-neutral-600 p-6">
 		<h2 class="text-2xl">New Server</h2>
