@@ -24,7 +24,7 @@ export async function startServer(id: string) {
 	const command = new Command(
 		'java',
 		['-jar', `paper-${server.version}-${server.paperBuild}.jar`, 'nogui'],
-		{ cwd: server.path }
+		{ cwd: server.path },
 	);
 
 	command.on('close', (data) => {
@@ -73,7 +73,7 @@ export async function createServer(name: string, path: string, version: string) 
 export async function downloadJar(
 	version: string,
 	path: string,
-	progressCallback: (progress: number, total: number) => void
+	progressCallback: (progress: number, total: number) => void,
 ) {
 	let downloaded = 0;
 	const { url, paperBuild } = await getDownloadUrl(version);
@@ -97,7 +97,7 @@ async function getDownloadUrl(version: string) {
 	// gets list of builds for the specified version
 	const buildsList = await (
 		await client.get<PaperBuildsList>(
-			`https://papermc.io/api/v2/projects/paper/versions/${paperVersion}`
+			`https://papermc.io/api/v2/projects/paper/versions/${paperVersion}`,
 		)
 	).data;
 
