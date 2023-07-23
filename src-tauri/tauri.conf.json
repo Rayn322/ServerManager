@@ -7,7 +7,7 @@
 		"withGlobalTauri": false
 	},
 	"package": {
-		"productName": "server-manager",
+		"productName": "Server Manager",
 		"version": "0.0.0"
 	},
 	"tauri": {
@@ -40,6 +40,12 @@
 				"readFile": true,
 				"removeDir": true,
 				"writeFile": true
+			},
+			"os": {
+				"all": true
+			},
+			"window": {
+				"startDragging": true
 			}
 		},
 		"bundle": {
@@ -85,9 +91,13 @@
 			{
 				"fullscreen": false,
 				"height": 600,
+				"width": 800,
+				"minHeight": 200,
+				"minWidth": 250,
 				"resizable": true,
-				"title": "server-manager",
-				"width": 800
+				"title": "Server Manager",
+				"titleBarStyle": "Overlay",
+				"hiddenTitle": true
 			}
 		]
 	}
