@@ -63,7 +63,7 @@
 				"icons/icon.icns",
 				"icons/icon.ico"
 			],
-			"identifier": "me.ryanlauderbach.servermanager",
+			"identifier": "com.ryanlauderbach.servermanager",
 			"longDescription": "",
 			"macOS": {
 				"entitlements": null,
