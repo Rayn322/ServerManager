@@ -21,33 +21,39 @@
 	}
 </script>
 
-<div class="fixed top-0 left-0 mt-14 flex h-screen w-64 flex-col bg-neutral-900 py-4">
-	<!-- TODO: make selected button a different color -->
-	<button class="p-2 hover:bg-neutral-700" on:click={() => (tab = 'console')}>Console</button>
-	<button class="p-2 hover:bg-neutral-700" on:click={() => (tab = 'settings')}>Settings</button>
-	<button class="p-2 hover:bg-neutral-700" on:click={() => (tab = 'details')}>Details</button>
-</div>
-<div class="ml-64 p-4">
-	<h1 class="mb-2 text-2xl capitalize">{tab}</h1>
-	{#if tab === 'console'}
-		{#if state?.running}
-			<button class="rounded-md bg-rose-600 p-2" on:click={() => stopServer(id)}>Stop</button>
+<div class="flex grow">
+	<div class="flex w-64 flex-col bg-neutral-900 pt-4 shrink-0">
+		<!-- TODO: make selected button a different color -->
+		<button class="p-2 hover:bg-neutral-700" on:click={() => (tab = 'console')}>Console</button>
+		<button class="p-2 hover:bg-neutral-700" on:click={() => (tab = 'settings')}>Settings</button>
+		<button class="p-2 hover:bg-neutral-700" on:click={() => (tab = 'details')}>Details</button>
+	</div>
+	<div class="p-4 flex flex-col grow">
+		<h1 class="mb-2 text-2xl capitalize">{tab}</h1>
+		{#if tab === 'console'}
+			{#if state?.running}
+				<button class="w-fit rounded-md bg-rose-600 p-2" on:click={() => stopServer(id)}>
+					Stop
+				</button>
+			{:else}
+				<button class="w-fit rounded-md bg-emerald-600 p-2" on:click={() => startServer(id)}>
+					Start
+				</button>
+			{/if}
+			<Console output={state?.output} child={state?.child} />
+		{:else if tab === 'settings'}
+			<p>Settings</p>
+			<button class="rounded-md bg-rose-600 p-2" on:click={deleteThis}>Delete Server</button>
+		{:else if tab === 'details'}
+			<p>ID: {id}</p>
+			<p>Name: {server?.name}</p>
+			<p>Version: {server?.version}</p>
+			<p>Paper Build: {server?.paperBuild}</p>
+			<p>File path: {server?.path}</p>
 		{:else}
-			<button class="rounded-md bg-emerald-600 p-2" on:click={() => startServer(id)}>Start</button>
+			<h1>Server</h1>
 		{/if}
-		<Console output={state?.output} child={state?.child} />
-	{:else if tab === 'settings'}
-		<p>Settings</p>
-		<button class="rounded-md bg-rose-600 p-2" on:click={deleteThis}>Delete Server</button>
-	{:else if tab === 'details'}
-		<p>ID: {id}</p>
-		<p>Name: {server?.name}</p>
-		<p>Version: {server?.version}</p>
-		<p>Paper Build: {server?.paperBuild}</p>
-		<p>File path: {server?.path}</p>
-	{:else}
-		<h1>Server</h1>
-	{/if}
+	</div>
 </div>
 
 <div class="fixed bottom-8 left-8">

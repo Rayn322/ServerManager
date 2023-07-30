@@ -33,17 +33,17 @@
 
 <div
 	bind:this={consoleDiv}
-	class="scrollbar mt-4 h-[65vh] overflow-y-auto break-words border border-b-0
+	class="scrollbar mt-4 overflow-y-auto h-10 grow break-words border border-b-0
 	border-neutral-500 bg-neutral-900 px-4 py-2 font-mono"
 >
 	{#each output as line}
 		<p>{line}</p>
 	{/each}
 </div>
-<form class="flex w-full" on:submit|preventDefault={enterCommand}>
+<form class="flex" on:submit|preventDefault={enterCommand}>
 	<input
 		type="text"
-		class="flex-grow border-neutral-500 bg-neutral-900 px-2 focus:border"
+		class="grow border-neutral-500 bg-neutral-900 px-2 focus:border"
 		placeholder="Enter command"
 		bind:value={input}
 		bind:this={inputElement}
