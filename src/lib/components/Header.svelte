@@ -2,7 +2,7 @@
 	import { type } from '@tauri-apps/api/os';
 
 	// temp fix until I can use transparent title bar and set background color
-	// TODO: see how this looks on windows and linux
+	// TODO: see how this looks on linux
 	async function isMacOS() {
 		return (await type()) === 'Darwin';
 	}
