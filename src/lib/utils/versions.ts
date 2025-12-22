@@ -4,8 +4,13 @@ import { getClient } from '@tauri-apps/api/http';
 export async function getVersionList() {
 	const client = await getClient();
 	const paperVersionsList = await (
-		await client.get<PaperVersionsList>('https://papermc.io/api/v2/projects/paper')
+		await client.get<PaperVersionsList>('https://fill.papermc.io/v3/projects/paper')
 	).data;
 
-	return paperVersionsList.versions.reverse();
+	const versions: string[] = [];
+	for (const versionGroup in paperVersionsList.versions) {
+		versions.push(...paperVersionsList.versions[versionGroup]);
+	}
+
+	return versions;
 }

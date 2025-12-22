@@ -29,7 +29,7 @@
 			},
 			"http": {
 				"request": true,
-				"scope": ["https://papermc.io/api/v2/**"]
+				"scope": ["https://fill.papermc.io/v3/**"]
 			},
 			"dialog": {
 				"open": true

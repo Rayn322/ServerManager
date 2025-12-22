@@ -1,6 +1,6 @@
 import { goto } from '$app/navigation';
 import { servers, states } from '$lib/stores/servers';
-import type { PaperBuildsList, PaperVersionsList } from '$lib/types/paper';
+import type { PaperBuildDetails } from '$lib/types/paper';
 import { saveServer } from '$lib/utils/data';
 import { getClient } from '@tauri-apps/api/http';
 import { Command } from '@tauri-apps/api/shell';
@@ -87,25 +87,12 @@ export async function downloadJar(
 async function getDownloadUrl(version: string) {
 	const client = await getClient();
 
-	const versionsList = await (
-		await client.get<PaperVersionsList>('https://papermc.io/api/v2/projects/paper')
-	).data;
-
-	// we can assume that the version exists because the ui only shows versions that exist
-	const paperVersion = versionsList.versions.find((ver) => ver === version) as string;
-
-	// gets list of builds for the specified version
-	const buildsList = await (
-		await client.get<PaperBuildsList>(
-			`https://papermc.io/api/v2/projects/paper/versions/${paperVersion}`,
-		)
-	).data;
-
-	// gets the last item in order to get the most recent build
-	const latestBuild = buildsList.builds[buildsList.builds.length - 1];
+	const buildDetails =( await client.get<PaperBuildDetails>(
+		`https://fill.papermc.io/v3/projects/paper/versions/${version}/builds/latest`
+	)).data;
 
 	return {
-		url: `https://papermc.io/api/v2/projects/paper/versions/${paperVersion}/builds/${latestBuild}/downloads/paper-${paperVersion}-${latestBuild}.jar`,
-		paperBuild: latestBuild,
+		url: buildDetails.downloads['server:default'].url,
+		paperBuild: buildDetails.id,
 	};
 }
