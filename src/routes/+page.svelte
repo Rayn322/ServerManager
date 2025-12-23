@@ -12,8 +12,7 @@
 </script>
 
 <main class="container">
-  <h1 class="text-blue-900 font-bold text-2xl">Welcome to Tauri + Svelte</h1>
-
+  <h1 class="text-2xl font-bold text-blue-900">Welcome to Tauri + Svelte</h1>
 
   <form class="row" onsubmit={greet}>
     <input id="greet-input" placeholder="Enter a name..." bind:value={name} />
