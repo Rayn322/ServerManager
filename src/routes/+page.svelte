@@ -19,7 +19,7 @@
   <ServerCard name="Cool Server" />
   <button
     onclick={() => (modalOpen = true)}
-    class="absolute right-8 bottom-8 flex cursor-pointer rounded-lg bg-green-700 p-4"
+    class="absolute right-8 bottom-8 flex rounded-lg bg-green-700 p-4"
   >
     <Plus />
   </button>
@@ -83,14 +83,12 @@
 
         <div class="flex gap-2">
           <button
-            class="cursor-pointer rounded bg-neutral-500 px-4 py-2 text-white"
+            class="rounded bg-neutral-500 px-4 py-2 text-white"
             onclick={() => (modalOpen = false)}
           >
             Close
           </button>
-          <button
-            class="grow cursor-pointer rounded bg-green-700 px-4 py-2 text-white"
-          >
+          <button class="grow rounded bg-green-700 px-4 py-2 text-white">
             Create Server
           </button>
         </div>
