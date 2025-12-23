@@ -1,6 +1,6 @@
 <script lang="ts">
+  import { Plus } from "@lucide/svelte";
   import ServerCard from "../components/ServerCard.svelte";
-  import Plus from "@lucide/svelte/icons/plus";
 </script>
 
 <!-- who cares about the layout for now -->
