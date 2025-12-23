@@ -11,7 +11,7 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "tauri": "tauri",
     "format": "prettier --write .",
-    "lint": "prettier --check ."
+    "lint": "prettier --check . && eslint ."
   },
   "license": "MIT",
   "dependencies": {
@@ -21,16 +21,24 @@
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
+    "@eslint/compat": "^1.4.0",
+    "@eslint/js": "^9.39.1",
     "@sveltejs/adapter-static": "^3.0.10",
     "@sveltejs/kit": "^2.49.2",
     "@sveltejs/vite-plugin-svelte": "^5.1.1",
     "@tauri-apps/cli": "^2.9.6",
+    "@types/node": "^24",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-svelte": "^3.13.1",
+    "globals": "^16.5.0",
     "prettier": "^3.7.4",
     "prettier-plugin-svelte": "^3.4.0",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "svelte": "^5.46.0",
     "svelte-check": "^4.3.5",
     "typescript": "~5.6.3",
+    "typescript-eslint": "^8.48.1",
     "vite": "^6.4.1"
   }
 }
