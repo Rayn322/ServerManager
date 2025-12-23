@@ -1,22 +1,3 @@
-<script lang="ts">
-  import { invoke } from "@tauri-apps/api/core";
-
-  let name = $state("");
-  let greetMsg = $state("");
-
-  async function greet(event: Event) {
-    event.preventDefault();
-    // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-    greetMsg = await invoke("greet", { name });
-  }
-</script>
-
-<main class="container">
+<main>
   <h1 class="text-2xl font-bold text-blue-900">Welcome to Tauri + Svelte</h1>
-
-  <form class="row" onsubmit={greet}>
-    <input id="greet-input" placeholder="Enter a name..." bind:value={name} />
-    <button type="submit">Greet</button>
-  </form>
-  <p>{greetMsg}</p>
 </main>
