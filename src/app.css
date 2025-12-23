@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/forms";
 
 body {
   @apply bg-neutral-900 text-neutral-50;
